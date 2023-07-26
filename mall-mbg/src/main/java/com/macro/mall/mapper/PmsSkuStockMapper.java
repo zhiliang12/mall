@@ -27,4 +27,11 @@ public interface PmsSkuStockMapper {
     int updateByPrimaryKeySelective(PmsSkuStock record);
 
     int updateByPrimaryKey(PmsSkuStock record);
+
+    public default void increaseLockStock(Long skuId, Integer quantity) {
+        PmsSkuStock skuStock = this.selectByPrimaryKey(skuId);
+        skuStock.setLockStock(skuStock.getLockStock() + quantity);
+        this.updateByPrimaryKeySelective(skuStock);
+    }
+
 }
