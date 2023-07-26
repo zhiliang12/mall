@@ -56,38 +56,38 @@ public class SmsHomeAdvertiseServiceImpl implements SmsHomeAdvertiseService {
         return advertiseMapper.updateByPrimaryKeySelective(advertise);
     }
 
-    @Override
-    public List<SmsHomeAdvertise> list(String name, Integer type, String endTime, Integer pageSize, Integer pageNum) {
-        PageHelper.startPage(pageNum, pageSize);
-        SmsHomeAdvertiseExample example = new SmsHomeAdvertiseExample();
-        SmsHomeAdvertiseExample.Criteria criteria = example.createCriteria();
-        if (!StrUtil.isEmpty(name)) {
-            criteria.andNameLike("%" + name + "%");
-        }
-        if (type != null) {
-            criteria.andTypeEqualTo(type);
-        }
-        if (!StrUtil.isEmpty(endTime)) {
-            String startStr = endTime + " 00:00:00";
-            String endStr = endTime + " 23:59:59";
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            Date start = null;
-            try {
-                start = sdf.parse(startStr);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            Date end = null;
-            try {
-                end = sdf.parse(endStr);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            if (start != null && end != null) {
-                criteria.andEndTimeBetween(start, end);
-            }
-        }
-        example.setOrderByClause("sort desc");
-        return advertiseMapper.selectByExample(example);
+@Override
+public List<SmsHomeAdvertise> list(AdvertiseSearchParams params) {
+    PageHelper.startPage(params.getPageNum(), params.getPageSize());
+    SmsHomeAdvertiseExample example = new SmsHomeAdvertiseExample();
+    SmsHomeAdvertiseExample.Criteria criteria = example.createCriteria();
+    if (!StrUtil.isEmpty(params.getName())) {
+        criteria.andNameLike("%" + params.getName() + "%");
     }
+    if (params.getType() != null) {
+        criteria.andTypeEqualTo(params.getType());
+    }
+    if (!StrUtil.isEmpty(params.getEndTime())) {
+        String startStr = params.getEndTime() + " 00:00:00";
+        String endStr = params.getEndTime() + " 23:59:59";
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date start = null;
+        try {
+            start = sdf.parse(startStr);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Date end = null;
+        try {
+            end = sdf.parse(endStr);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if (start != null && end != null) {
+            criteria.andEndTimeBetween(start, end);
+        }
+    }
+    example.setOrderByClause("sort desc");
+    return advertiseMapper.selectByExample(example);
+}
 }

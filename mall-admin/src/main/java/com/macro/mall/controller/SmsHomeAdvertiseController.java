@@ -4,6 +4,7 @@ import com.macro.mall.common.api.CommonPage;
 import com.macro.mall.common.api.CommonResult;
 import com.macro.mall.model.SmsHomeAdvertise;
 import com.macro.mall.service.SmsHomeAdvertiseService;
+import com.macro.mall.service.impl.AdvertiseSearchParams;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -76,12 +77,8 @@ public class SmsHomeAdvertiseController {
     @ApiOperation("分页查询广告")
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<CommonPage<SmsHomeAdvertise>> list(@RequestParam(value = "name", required = false) String name,
-                                                           @RequestParam(value = "type", required = false) Integer type,
-                                                           @RequestParam(value = "endTime", required = false) String endTime,
-                                                           @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
-                                                           @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum) {
-        List<SmsHomeAdvertise> advertiseList = advertiseService.list(name, type, endTime, pageSize, pageNum);
+    public CommonResult<CommonPage<SmsHomeAdvertise>> list(AdvertiseSearchParams params) {
+        List<SmsHomeAdvertise> advertiseList = advertiseService.list(params);
         return CommonResult.success(CommonPage.restPage(advertiseList));
     }
 }

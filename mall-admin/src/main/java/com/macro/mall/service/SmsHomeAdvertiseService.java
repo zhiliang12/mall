@@ -1,6 +1,7 @@
 package com.macro.mall.service;
 
 import com.macro.mall.model.SmsHomeAdvertise;
+import com.macro.mall.service.impl.AdvertiseSearchParams;
 
 import java.util.List;
 
@@ -37,5 +38,5 @@ public interface SmsHomeAdvertiseService {
     /**
      * 分页查询广告
      */
-    List<SmsHomeAdvertise> list(String name, Integer type, String endTime, Integer pageSize, Integer pageNum);
+    List<SmsHomeAdvertise> list(AdvertiseSearchParams params);
 }
