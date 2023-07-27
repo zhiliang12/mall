@@ -17,19 +17,14 @@ public class CmsTopic implements Serializable {
 
     private Date endTime;
 
-    @ApiModelProperty(value = "参与人数")
-    private Integer attendCount;
-
-    @ApiModelProperty(value = "关注人数")
-    private Integer attentionCount;
-
     private Integer readCount;
+
+    private TopicAttendance attendance;
+    private TopicAttention attention;
 
     @ApiModelProperty(value = "奖品名称")
     private String awardName;
 
-    @ApiModelProperty(value = "参与方式")
-    private String attendType;
 
     @ApiModelProperty(value = "话题内容")
     private String content;
@@ -84,21 +79,6 @@ public class CmsTopic implements Serializable {
         this.endTime = endTime;
     }
 
-    public Integer getAttendCount() {
-        return attendCount;
-    }
-
-    public void setAttendCount(Integer attendCount) {
-        this.attendCount = attendCount;
-    }
-
-    public Integer getAttentionCount() {
-        return attentionCount;
-    }
-
-    public void setAttentionCount(Integer attentionCount) {
-        this.attentionCount = attentionCount;
-    }
 
     public Integer getReadCount() {
         return readCount;
@@ -116,13 +96,6 @@ public class CmsTopic implements Serializable {
         this.awardName = awardName;
     }
 
-    public String getAttendType() {
-        return attendType;
-    }
-
-    public void setAttendType(String attendType) {
-        this.attendType = attendType;
-    }
 
     public String getContent() {
         return content;
@@ -144,11 +117,15 @@ public class CmsTopic implements Serializable {
         sb.append(", createTime=").append(createTime);
         sb.append(", startTime=").append(startTime);
         sb.append(", endTime=").append(endTime);
-        sb.append(", attendCount=").append(attendCount);
-        sb.append(", attentionCount=").append(attentionCount);
+        if (attendance != null) {
+            sb.append(", attendance=").append("AttendCount=").append(attendance.getAttendCount())
+                    .append(", AttendType=").append(attendance.getAttendType());
+        }
+        if (attention != null) {
+            sb.append(", attention=").append("AttentionCount=").append(attention.getAttentionCount());
+        }
         sb.append(", readCount=").append(readCount);
         sb.append(", awardName=").append(awardName);
-        sb.append(", attendType=").append(attendType);
         sb.append(", content=").append(content);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
